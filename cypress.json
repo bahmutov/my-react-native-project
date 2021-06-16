@@ -1,6 +1,4 @@
 {
-  "supportFile": false,
-  "pluginsFile": false,
   "baseUrl": "http://localhost:19006",
   "viewportWidth": 500,
   "viewportHeight": 700
