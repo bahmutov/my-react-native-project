@@ -15,7 +15,7 @@ export default function App() {
 
   return (
     <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? <ActivityIndicator/> : (
+      {isLoading ? <ActivityIndicator testID="loading"/> : (
         <FlatList
           accessibilityLabel="users"
           data={data}
