@@ -23,6 +23,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "cypress": "^7.5.0",
+    "expo-cli": "^4.5.2",
     "start-server-and-test": "^1.12.5"
   },
   "private": true
