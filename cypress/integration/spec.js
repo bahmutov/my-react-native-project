@@ -48,7 +48,7 @@ it('shows the loading indicator', () => {
 })
 
 it('shows mock data', () => {
-  cy.intercept('/users', { fixture: 'users.json' }).as('users')
+  cy.intercept('/users', { fixture: 'users.json' })
   cy.visit('/')
   cy.get('[data-testid=user]').should('have.length', 3)
 })
