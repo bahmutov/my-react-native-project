@@ -2,19 +2,18 @@
 
 it('loads a list of users', () => {
   cy.visit('/')
-  cy.get('[data-testid=user]')
-    .should('have.length.gt', 3)
+  cy.get('[data-testid=user]').should('have.length.gt', 3)
 })
 
 it('spy on the network load', () => {
   cy.intercept('/users').as('users')
   cy.visit('/')
-  cy.wait('@users').its('response.body')
+  cy.wait('@users')
+    .its('response.body')
     .should('be.an', 'Array')
     .and('have.length.gt', 5)
-    .then(users => {
-      cy.get('[data-testid=user]')
-        .should('have.length', users.length)
+    .then((users) => {
+      cy.get('[data-testid=user]').should('have.length', users.length)
     })
 })
 
@@ -37,7 +36,7 @@ it('shows the loading indicator', () => {
   // slow down the response by 1 second
   // https://on.cypress.io/intercept
   cy.intercept('/users', (req) => {
-    return req.continue(res => res.setDelay(1000))
+    return req.continue((res) => res.setDelay(1000))
   }).as('users')
   cy.visit('/')
   // the loading indicator should be visible at first
@@ -55,7 +54,8 @@ it('shows mock data', () => {
 
 it('shows loading indicator (mock)', () => {
   cy.intercept('/users', {
-    fixture: 'users.json', delay: 1000
+    fixture: 'users.json',
+    delay: 1000,
   }).as('users')
   cy.visit('/')
   cy.get('[data-testid=loading]').should('be.visible')
@@ -65,8 +65,9 @@ it('shows loading indicator (mock)', () => {
 
 it('handles network error after 1 second', () => {
   cy.intercept('/users', (req) => {
-    return Cypress.Promise.delay(1000)
-      .then(() => req.reply({ forceNetworkError: true }))
+    return Cypress.Promise.delay(1000).then(() =>
+      req.reply({ forceNetworkError: true }),
+    )
   })
   // observe the application's behavior
   // in our case, the app simply logs the error
@@ -79,4 +80,17 @@ it('handles network error after 1 second', () => {
   // confirm the loading indicator goes away
   cy.get('[data-testid=loading]').should('not.exist')
   cy.get('@logError').should('have.been.called')
+})
+
+it('is accessible', () => {
+  cy.intercept('/users', {
+    fixture: 'users.json',
+    delay: 2000,
+  })
+  cy.visit('/')
+  cy.get('[aria-label="App is loading users"]').should('be.visible')
+  cy.get('[aria-label="users"]')
+    .should('be.visible')
+    .get('[aria-label=user]')
+    .should('have.length', 3)
 })
