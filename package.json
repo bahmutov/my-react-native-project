@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@cypress/code-coverage": "3.10.0",
+    "@cypress/code-coverage": "3.12.32",
     "babel-plugin-istanbul": "^6.0.0",
     "cypress": "9.7.0",
     "expo-cli": "^4.5.2",
